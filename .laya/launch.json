@@ -1,0 +1,32 @@
+{
+	"version": "0.2.0",
+	"configurations": [ 
+		{
+			"name": "layaAir",
+			"type": "chrome",
+			"request": "launch",
+			"file": "${workspaceRoot}/bin/index.html",
+			"runtimeExecutable": "${execPath}",
+			"useBuildInServer": true,
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}",
+			"port": 9222,
+			"fixedPort":false
+		},
+		{
+			"name": "chrome调试",
+			"type": "chrome",
+			"request": "launch",
+			"file": "${workspaceRoot}/bin/index.html",
+			"runtimeArgs": [
+				"--allow-file-access-from-files",
+				"--allow-file-access-frome-files",
+				" --disable-web-security"
+			],
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}",
+			"userDataDir": "${workspaceRoot}/.laya/chrome",
+			"fixedPort":false
+		}
+	]
+}

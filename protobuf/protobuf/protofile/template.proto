@@ -1,0 +1,407 @@
+package com.msg;
+
+//客户端 登录请求
+message c_userLogin_1000{
+	required string openId = 1; //玩家微信openid
+	optional wxInfo wxInfo = 2; //玩家授权后微信信息
+}
+
+//服务器 登录结果
+message s_userLogin_1001{
+	required playerInfo playerInfo = 1;
+	required int64 loginTime = 2;				//本次登录的时间戳(秒 东八区) == Java new Date().getTime();
+	optional serverConfig serverConfig = 3;		//服务器动态配置
+}
+
+//客户端 获取openID
+message c_getOpenId_1100{
+	required string appid = 1;			// appid
+	required string sessionCode = 2;	// sessionCode
+}
+
+//服务器 发送openID
+message s_getOpenId_1101{
+	required string openId = 1;			//openId
+}
+
+//客户端 使用钻石兑换请求
+message c_ExchangeWithDiamond_2000{
+	required string openId = 1;			//玩家微信openid
+	required int32 type = 2;			//兑换类型，1金币2体力
+	required int32 diamondNum = 3;		//钻石兑换数量（指消耗的数量）
+}
+
+//服务器 使用钻石兑换结果
+message s_ExchangeWithDiamond_2001{
+	required int32 result = 1;			//兑换结果，0失败1成功
+	optional moneyInfo moneyInfo = 2;	//兑换之后，新的钱币信息，若失败则为空
+}
+
+//客户端 升级武器等级请求
+message c_UpgradeWeaponLvl_2010{
+	required string openId = 1;		//玩家微信openid
+	required int32 weaponID = 2;	//武器id，1主武器，2~7副武器
+	required int32 curLvl = 3;		//升级前等级
+	required int32 costGold = 4;	//此次升级需要的花费金币数量
+}
+
+//服务器 升级武器等级结果
+message s_UpgradeWeaponLvl_2011{
+	required int32 result = 1;		//升级结果，0失败1成功
+	required int32 weaponID = 2;	//武器ID
+	required int32 newLvl = 3;		//升级后等级
+	required int32 totalGold = 4;	//此次升级后剩余的总金币数量
+}
+
+//客户端 升级产能等级请求
+message c_UpgradeSpawnLvl_2012{
+	required string openId = 1;					//玩家微信openid
+	required int32 curLvl = 2;					//升级前等级
+	required int32 costGold = 3;				//此次升级需要的花费金币数量
+	required int32 newGoldSpawnLvl = 4;			//升级后金币产能
+	required int32 newDiamondSpawnLvl = 5;		//升级后钻石产能
+}
+
+//服务器 升级产能等级结果
+message s_UpgradeSpawnLvl_2013{
+	required int32 result = 1;		//升级结果，0失败1成功
+	required int32 newLvl = 2;		//升级后等级
+	required int32 totalGold = 3;	//此次升级后剩余的总金币数量
+}
+
+//客户端 武器升阶
+message c_WeaponEvolution_2014{
+	required string openId = 1;				//玩家微信openid
+	required int32 weaponID = 2;			//武器id，1主武器，2~7副武器
+	required int32 curEvolutionLvl = 3;		//升阶前等级
+	required int32 costGold = 4;			//此次升阶需要的花费金币数量
+}
+
+//服务器 武器升阶结果
+message s_WeaponEvolution_2015{
+	required int32 result = 1;				//升阶结果，0失败1成功
+	required int32 weaponID = 2;			//武器id，1主武器，2~7副武器
+	required int32 newEvolutionLvl = 3;		//升阶后等级
+	required int32 totalGold = 4;			//此次升级后剩余的总金币数量
+}
+
+//客户端 请求更换副武器
+message c_EquipSideWeapon_2020{
+	required string openId = 1;			//玩家微信openid
+	required int32 sideWeaponID = 2;	//欲更换的副武器ID
+}
+
+//服务器 副武器更换结果
+message s_EquipSideWeapon_2021{
+	required int32 result = 1;			//更换结果，0失败1成功
+	required int32 sideWeaponID = 2;	//更换后的副武器ID
+}
+
+//客户端 解锁副武器
+message c_UnlockSideWeapon_2022{
+	required string openId = 1;			//玩家微信openid
+	required int32 sideWeaponID = 2;	//欲解锁的副武器ID
+}
+
+//服务器 解锁副武器结果
+message s_UnlockSideWeapon_2023{
+	required int32 result = 1;					//解锁结果，0失败1成功
+	optional weaponDetail sideWeaponInfo = 2;	//解锁成功则返回对应的副武器信息，失败则为空
+}
+
+//客户端 请求创建钱币产能（从无到有）
+message c_CreateMoneySpawn_2030{
+	required string openId = 1;		//玩家微信openid
+	required int32 moneyType = 2;	//产能类型，1金币2钻石
+}
+
+//服务器 创建钱币产能结果（从无到有）
+message s_CreateMoneySpawn_2031{
+	required int32 result = 1;		//创建结果，0失败1成功
+	required moneySpawnInfo newSpawnInfo = 2;	//新的产能信息
+}
+
+//客户端 更新钱币产能信息（已有）
+message c_UpdateMoneySpawn_2032{
+	required string openId = 1;		//玩家微信openid
+	required int32 spawnID = 2;		//产能ID
+	required int32 moneyDelta = 3;	//新增的数量
+}
+
+//服务器 更新钱币产能信息（已有）
+message s_UpdateMoneySpawn_2033{
+	required int32 result = 1;					//更新结果，0失败1成功
+	optional moneySpawnInfo spawnInfo = 2;		//新的产能信息，失败为空
+}
+
+//客户端 收获钱币产能信息（已有）
+message c_GainMoneySpawn_2034{
+	required string openId = 1;		//玩家微信openid
+	required int32 spawnID = 2;		//产能ID
+	required int32 base = 3;		//产能的基数，不得为负数。完全由本地累积获得。
+	required int32 lucky = 4;		//获取产能的倍数，不得为负数，默认1倍，视频5倍，分享10倍
+}
+
+//服务器 收获钱币产能信息（已有）
+message s_GainMoneySpawn_2035{
+	required int32 result = 1;				//收获结果，0失败1成功
+	optional moneySpawnInfo spawnInfo = 2;	//收获的产能信息，失败为空
+}
+
+//客户端 超时移除钱币产能信息（已有）
+message c_RemoveMoneySpawn_2036{
+	required string openId = 1;		//玩家微信openid
+	required int32 spawnID = 2;		//产能ID
+}
+
+//服务器 超时移除钱币产能信息（已有）
+message s_RemoveMoneySpawn_2037{
+	required int32 result = 1;			//移除结果，0失败1成功
+	required int32 spawnID = 2;			//产能ID
+}
+
+//客户端 因好友邀请而进入游戏
+message c_InvitedByFriend_2040{
+	required string openId = 1;			//玩家微信openid
+	required string inviterOpenID = 2;	//邀请者的openid
+}
+
+//服务器 因好友邀请而进入游戏
+message s_InvitedByFriend_2041{
+	required int32 result = 1;			//验证结果，0失败（例如已经邀请过了，再次点击相同链接进入；或者自己邀请自己）1成功
+}
+
+//客户端 查询自己的邀请列表
+message c_CheckInviteList_2042{
+	required string openId = 1;			//玩家微信openid
+}
+
+//服务器 查询自己的邀请列表
+message s_CheckInviteList_2043{
+	repeated inviteDetail inviteList = 1;	//好友邀请列表
+}
+
+//客户端 领取邀请奖励
+message c_GetInviteReward_2044{
+	required string openId = 1;			//玩家微信openid
+	required string friendOpenId = 2;	//好友微信openid
+}
+
+//服务器 领取邀请奖励
+message s_GetInviteReward_2045{
+	required int32 result = 1;				//领取结果，0失败1成功
+	optional inviteDetail rewardInfo = 2;	//奖励信息，失败为空
+}
+
+//客户端 领取邀请绑定奖励
+message c_GetInviteVerifyReward_2046{
+	required string openId = 1;			//玩家微信openid
+	required string friendOpenId = 2;	//好友微信openid
+	required int32 rewardType = 3;		//领取奖励类型，1领取邀请奖励，2领取绑定奖励
+}
+
+//服务器 领取邀请绑定奖励
+message s_GetInviteVerifyReward_2047{
+	required int32 result = 1;				//领取结果，0失败1成功
+	optional inviteDetail firendInfo = 2;	//新的好友状态信息
+	optional int32 rewardNum = 3;			//本次领取奖励的数额
+}
+
+//客户端 体力倒计时完毕（每5分钟1个周期）
+message c_GainPointByTime_2050{
+	required string openId = 1;			//玩家微信openid
+}
+
+//服务器 体力倒计时完毕（每5分钟1个周期）
+message s_GainPointByTime_2051{
+	required int32 result = 1;			//体力获取结果，0失败1成功
+	optional moneyInfo moneyInfo = 2;	//领取后的钱包信息，若失败则为空
+}
+
+//客户端 因比赛结束获取体力
+message c_GainPointByMatch_2052{
+	required string openId = 1;			//玩家微信openid
+	required int32 curLevel = 2;		//关卡
+}
+
+//服务器 因比赛结束获取体力
+message s_GainPointByMatch_2053{
+	required int32 result = 1;			//体力获取结果，0失败1成功
+	optional int32 pointNum = 2;		//当前剩余体力
+}
+
+
+//客户端 关卡结算[点击继续战斗/领取奖励/十倍领取]
+message c_MatchComplete_2100{
+	required string openId = 1;			 //玩家微信openid
+	required int32 completedLevel = 2;   //完成关卡 -1:失败未完成
+	required int32 goldReward = 3;       //领取奖励金币数量 0:继续挑战,累计到下次领取
+}
+
+//服务器 关卡结算
+message s_MatchComplete_2100{
+	required int32 goldReward = 1;       //领取奖励金币数量
+	required int32 latestUnCompletedLevelID = 2;   //当前新的关卡id, 完成最后一关/挑战失败此关卡id不变, 成功+1, 
+}
+
+//客户端 通知服务器游戏开始，更新体力数据
+message c_MatchStart_2101{
+	required string openId = 1;			 //玩家微信openid
+}
+
+//服务器 游戏开始
+message s_MatchStart_2101{
+	required int32 result = 1;		//游戏开始结果，0失败1成功
+	required int32 curPoint = 2;	//当前剩余体力
+	optional int64 latestPointRefreshTime = 3;	//体力更新时间(秒)，以满体力开始游戏时 = new Date().getTime()，其他情况为空
+}
+
+//客户端 获取短信验证码
+message c_GetMessageVerifyCode_2200{
+	required int64 phoneNumber = 1;	//手机号
+}
+
+//服务器 获取短信验证码结果
+message s_GetMessageVerifyCode_2201{
+	required int32 result = 1;		//获取短信验证码结果，0失败1成功
+}
+
+//客户端 发送并检查手机绑定
+message c_CheckPhoneVerify_2202{
+	required string openId = 1;			//玩家微信openid
+	required int64 phoneNumber = 2;		//手机号
+	required int32 verifyCode = 3;		//验证码
+}
+
+//服务器 手机绑定结果
+message s_CheckPhoneVerify_2203{
+	required int32 result = 1;					//手机绑定结果，0失败1成功
+	optional rewardInfo verifyReward = 2;	//如果绑定成功，返回抽奖的奖励信息。失败则不发。
+}
+
+//客户端 发送抽奖请求
+message c_Lottery_2300{
+	required string openId = 1;			//玩家微信openid
+}
+
+//服务器 抽奖结果
+message s_Lottery_2301{
+	required int32 result = 1;				//抽奖结果，0失败1成功。
+	optional int32 rewardConfigID = 2;		//本次抽奖获得的奖品配置ID。失败则不发。
+}
+
+//客户端 查看抽奖历史
+message c_CheckLotteryRewardHistroy_2302{
+	required string openId = 1;			//玩家微信openid
+	required int32 pageIndex = 2;		//页数
+	required int32 histCount = 3;		//每页个数
+}
+
+//服务器 返回抽奖历史内容
+message s_CheckLotteryRewardHistroy_2303{
+	required int32 result = 1;						//查询结果 0失败1成功2成功且完全查询完毕
+	repeated lotteryRewardInfo rewardHistList = 2;	//查询历史信息的内容
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//struct数据结构
+
+//玩家微信信息
+message wxInfo{
+	required string nickName = 1;   //昵称
+	required string imageUrl = 2;	//头像 微信头像, 如果没有授权使用默认头像
+}
+
+message playerInfo{
+	required string openId = 1; 
+	required newbiGuideInfo newbiGuideInfo = 2;//新手引导
+	required moneyInfo moneyInfo = 3;//财富
+	required levelInfo levelInfo = 4;//关卡
+	required playerWeaponInfo playerWeaponInfo = 5;//武器
+	repeated inviteDetail inviteList = 6;	//好友邀请列表
+	required verifyInfo verifyInfo = 7;		//手机绑定信息
+}
+
+//新手引导信息
+message newbiGuideInfo{
+	required int32 nextStep = 1; //当前需要进行引导步骤.  0: , -1:已经完成引导
+}
+
+//钱币数据格式
+message moneyInfo{
+	required int32 goldNum = 1;					//金币数量
+	required int32 diamondNum = 2;				//钻石数量
+	required int32 pointNum = 3;				//体力数量
+	required int64 latestPointRefreshTime = 4;	//最近一次体力恢复时间戳(秒 东八区) == Java new Date().getTime();
+	repeated moneySpawnInfo spawnList = 5;		//产能列表
+	required int32 lotteryNum = 6;				//抽奖次数
+}
+
+//产能
+message moneySpawnInfo{
+	required int32 spawnID = 1;		//产能ID，用于相互区分
+	required int32 moneyType = 2;	//货币类型，1金币2钻石
+	required int32 moneyNum = 3;	//货币当前已累计的数量
+	required int32 spawnType = 4;	//当前的产生类型，1为正在增加，2为正在倒计时
+	required int64 latestPointRefreshTime = 5;	//最近一次更新的时间戳（秒 东八区）
+	required int64 createTime = 6;	//产能创建的时间戳
+}
+
+//关卡信息
+message levelInfo{
+	required int32 latestUnCompeleteLevel = 1;	//当前关卡
+}
+
+message playerWeaponInfo{
+	required weaponDetail mainWeapon = 1;   //主武器
+	required int32 curSideWeaponId = 2;   	//当前使用副武器id
+	repeated weaponDetail sideWeapons  = 3;	//副武器
+	required int32 spawnLvl = 4;			//金币与钻石的产能等级
+}
+
+message weaponDetail{
+	required int32 id = 1;        		//武器id: 1: 主武器 2~7: 副武器
+	required int32 level = 2;			//武器强化等级，主武器的子弹数量、子弹强度，副武器的武器威力、武器强度都用此值进行计算所得
+	required int32 evolveLevel = 3;    	//进阶等级, 初始1阶
+}
+
+//邀请好友信息
+message inviteDetail{
+	required string friendOpenID = 1;	//好友OpenID，用于区分好友
+	required string picUrl = 2;			//好友头像URL
+	required int32 rewardGained = 3;	//奖励是否已经领取，0未领取任何奖励 1已领取邀请奖励,未绑定手机 2已领取邀请奖励,已绑定手机 3已领取绑定奖励
+	required int32 rewardNum = 4;		//奖励数量
+	required int32 index = 5;			//好友编号，从1开始
+}
+
+//手机绑定信息
+message verifyInfo{
+	required int32 state = 1;		//手机绑定状态，0未绑定1已绑定
+}
+
+//服务器配置
+message serverConfig{
+	required int32 shareEnable = 1;		//允许分享复活的总开关，0禁用1启用
+	required int32 luckyEnable = 2;		//允许产能多倍领取、结算多倍领取的总开关，0禁用1启用
+	required int32 inviteType = 3;		//邀请好友的功能切换开关，0旧功能（无转盘相关）1新功能（有转盘相关）
+	required int32 verifyReward = 4;	//绑定手机的钻石奖励数值
+	required int32 exchange_Coin = 5;	//1钻石兑换金币的数量
+	required int32 exchange_Point = 6;	//1钻石兑换体力的数量
+	required int32 verifyColddown = 7;	//验证短信发送间隔（秒）
+}
+
+//抽奖奖品记录信息
+message lotteryRewardInfo{
+	required int32 rewardConfigID = 1;		//奖品配置ID，会根据此ID查找配置表中的相关内容
+	required int64 lotteryTime = 2;			//抽奖时间戳（秒 东八区）
+	required int64 messageDeleteTime = 3;	//超时时间戳（秒 东八区）
+}
+
+//绑定奖励信息
+message rewardInfo{
+	optional int32 diamondNum = 1;		//奖励的钻石数量
+	optional int32 goldNum = 2;			//奖励的金币数量
+	optional int32 pointNum = 3;		//奖励的体力数量
+	optional int32 lotteryNum = 4;		//奖励的抽奖次数
+}

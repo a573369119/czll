@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='utf-8' />
+	<title>www.layabox.com</title>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
+	/>
+	<meta name="renderer" content="webkit" />
+	<meta name='apple-mobile-web-app-capable' content='yes' />
+	<meta name='full-screen' content='true' />
+	<meta name='x5-fullscreen' content='true' />
+	<meta name='360-fullscreen' content='true' />
+	<meta name="laya" screenorientation="landscape" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv='expires' content='0' />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+</head>
+
+<body>
+	<!--以下引用了常用类库，如果不使用，可以删除-->
+	<!--核心包，封装了显示对象渲染，事件，时间管理，时间轴动画，缓动，消息交互,socket，本地存储，鼠标触摸，声音，加载，颜色滤镜，位图字体等-->
+	<script type="text/javascript" src="libs/laya.core.js"></script>
+	<!--<script type="text/javascript" src="libs/min/laya.core.min.js"></script>-->
+	<!--提供了微信小游戏的适配-->
+	<script type="text/javascript" src="libs/laya.wxmini.js"></script>
+	<!--封装了webgl渲染管线，如果使用webgl渲染，可以在初始化时调用Laya.init(1000,800,laya.webgl.WebGL);-->
+	<script type="text/javascript" src="libs/laya.webgl.js"></script>
+	<!--<script type="text/javascript" src="libs/min/laya.webgl.min.js"></script>-->
+	<!--是动画模块，包含了swf动画，骨骼动画等-->
+	<script type="text/javascript" src="libs/laya.ani.js"></script>
+	<!--<script type="text/javascript" src="libs/min/laya.ani.min.js"></script>-->
+	<!--包含更多webgl滤镜，比如外发光，阴影，模糊以及更多-->
+	<!--<script type="text/javascript" src="libs/laya.filter.js"></script>-->
+	<!--封装了html动态排版功能-->
+	<script type="text/javascript" src="libs/laya.html.js"></script>
+	<!--<script type="text/javascript" src="libs/min/laya.html.min.js"></script>-->
+	<!--粒子类库-->
+	<!--<script type="text/javascript" src="libs/laya.particle.js"></script>-->
+	<!--提供tileMap解析支持-->
+	<!--<script type="text/javascript" src="libs/laya.tiledmap.js"></script>-->
+	<!--提供了制作UI的各种组件实现-->
+	<script type="text/javascript" src="libs/laya.ui.js"></script>
+	<!--<script type="text/javascript" src="libs/min/laya.ui.min.js"></script>-->
+	<!--提供LayaAir3D接口-->
+	<!--<script type="text/javascript" src="libs/laya.d3.js"></script>-->
+	<!-- 物理引擎matter.js -->
+
+	<!-- network -->
+	<!--
+	<script type="text/javascript" src="libs/bytebuffer.js"></script>
+	<script type="text/javascript" src="libs/protobuf.js"></script>
+	-->
+	<script type="text/javascript" src="libs/protobuf-library.js"></script>
+	<!--<script type="text/javascript" src="libs/min/protobuf-library.min.js"></script>-->
+	<script type="text/javascript" src="libs/protobuf-bundles.js"></script>
+	<!--<script type="text/javascript" src="libs/min/protobuf-bundles.min.js"></script>-->
+	<!--
+	<script type="text/javascript" src="../protobuf/library/protobuf-library.js"></script>
+	<script type="text/javascript" src="../protobuf/bundles/protobuf-bundles.js"></script>
+	-->
+
+	<!--用户自定义顺序文件添加到这里-->
+	<!--jsfile--Custom-->
+	<script type="text/javascript" src="libs/laya.debugtool.js"></script>
+	<!--<script type="text/javascript" src="libs/min/puremvc-typescript-standard-1.0-min.js"></script>-->
+	<script type="text/javascript" src="libs/puremvc-typescript-standard-1.0.js"></script>
+	<script src="js/uiscripts/BaseUICtrl.js"></script>
+	<script src="js/data/model/playerinfo/BasePlayerInfo.js"></script>
+	<script src="js/game/components/2DComponent/ComponentBase2D.js"></script>
+	<script src="js/game/components/2DComponent/moveComponent/BaseMoveComponent.js"></script>
+	<!--jsfile--Custom-->
+	<!--自定义的js(src文件夹下)文件自动添加到下面jsfile模块标签里面里-->
+	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->
+	<!--jsfile--startTag-->
+	<script src="js/utils/wechatutil/WechatUtil.js"></script>
+	<script src="js/utils/TweenUtil/tweenfunc.js"></script>
+	<script src="js/utils/TweenUtil/tween3dutil.js"></script>
+	<script src="js/utils/TweenUtil/tween2dutil.js"></script>
+	<script src="js/utils/TimeWatch.js"></script>
+	<script src="js/utils/timer/TimeManager.js"></script>
+	<script src="js/utils/timer/linklist.js"></script>
+	<script src="js/utils/timer/cbhandler.js"></script>
+	<script src="js/utils/SortUtil.js"></script>
+	<script src="js/utils/RandomArrayUtil.js"></script>
+	<script src="js/utils/Pool/ScriptPoolManager_deprecated.js"></script>
+	<script src="js/utils/Pool/ScriptPoolManager.js"></script>
+	<script src="js/utils/Pool/LayaScriptObjectPool_depreacated.js"></script>
+	<script src="js/utils/MathUtil.js"></script>
+	<script src="js/utils/Log.js"></script>
+	<script src="js/utils/GameDataUtil.js"></script>
+	<script src="js/utils/CurveUtil.js"></script>
+	<script src="js/utils/CommonUtil2D.js"></script>
+	<script src="js/utils/CommonUtil.js"></script>
+	<script src="js/utils/ClipFontUtli.js"></script>
+	<script src="js/uiscripts/UIIDDefine.js"></script>
+	<script src="js/network/websocket/WsConnection.js"></script>
+	<script src="js/network/websocket/WebsocketNetworkManager.js"></script>
+	<script src="js/network/NetworkHeartBeat.js"></script>
+	<script src="js/network/NetworkEnumDefine.js"></script>
+	<script src="js/network/NetMessageHandler/MessageHandler.js"></script>
+	<script src="js/network/NetMessageHandler/BaseMsgHandler.js"></script>
+	<script src="js/network/MessageSender/WebsocketMessageSender.js"></script>
+	<script src="js/network/MessageSender/HttpMessageSender.js"></script>
+	<script src="js/network/MessageSender/BaseMessageSender.js"></script>
+	<script src="js/network/MessageHandlerFactory.js"></script>
+	<script src="js/network/http/HttpNetworkManager.js"></script>
+	<script src="js/network/http/HttpManager.js"></script>
+	<script src="js/network/EnumNetMessage.js"></script>
+	<script src="js/manager/WechatFuncManager.js"></script>
+	<script src="js/manager/StorageManager.js"></script>
+	<script src="js/manager/StageManager.js"></script>
+	<script src="js/manager/ShakeManager.js"></script>
+	<script src="js/manager/ResourceManager.js"></script>
+	<script src="js/manager/project/PropManager.js"></script>
+	<script src="js/manager/project/PlayerManager.js"></script>
+	<script src="js/manager/project/GamePoolManager.js"></script>
+	<script src="js/manager/project/BulletManager.js"></script>
+	<script src="js/manager/MoneyAnimManager.js"></script>
+	<script src="js/manager/MatchSpineManager.js"></script>
+	<script src="js/manager/LotteryManager.js"></script>
+	<script src="js/manager/LanguageManager.js"></script>
+	<script src="js/manager/GameDataManager.js"></script>
+	<script src="js/manager/FloatTipAnimManager.js"></script>
+	<script src="js/manager/ConfigManager.js"></script>
+	<script src="js/manager/AudioManager.js"></script>
+	<script src="js/game/planeGameUtil/IDGenerator.js"></script>
+	<script src="js/game/planeGameUtil/GameUtil.js"></script>
+	<script src="js/game/planeGameUtil/FormulaUtil.js"></script>
+	<script src="js/game/logic/PropSpawnLogic.js"></script>
+	<script src="js/game/logic/MonsterSpawnLogic.js"></script>
+	<script src="js/game/logic/monsterskill/attachskill/AttachTree.js"></script>
+	<script src="js/game/logic/monsterskill/attachskill/AttachDataCenter.js"></script>
+	<script src="js/game/logic/CollisionDetector.js"></script>
+	<script src="js/game/components/2DComponent/MoveComponentHelp2D.js"></script>
+	<script src="js/framework/util/spine/SpinePoolManager.js"></script>
+	<script src="js/framework/util/spine/SpineObjectPool.js"></script>
+	<script src="js/framework/util/physics/OBB.js"></script>
+	<script src="js/framework/util/physics/CollisionUtil.js"></script>
+	<script src="js/data/struct/GameStruct.js"></script>
+	<script src="js/data/model/PropSpawnWeight.js"></script>
+	<script src="js/data/model/PlatformInfo/ShareQueryData.js"></script>
+	<script src="js/data/model/PlatformInfo/PlatformData.js"></script>
+	<script src="js/data/const/ZOrderDefine.js"></script>
+	<script src="js/data/const/WechatConstDefine.js"></script>
+	<script src="js/data/const/ResPathConst.js"></script>
+	<script src="js/data/const/OpenDataContextDefine.js"></script>
+	<script src="js/data/const/NotificationNames.js"></script>
+	<script src="js/data/const/MediatorNames.js"></script>
+	<script src="js/data/const/EnumDefine.js"></script>
+	<script src="js/data/const/ConstDefine.js"></script>
+	<script src="js/data/config/MainWeaponEvloveConfig.js"></script>
+	<script src="js/data/config/HttpShareConfig.js"></script>
+	<script src="js/commands/CheckVersionControlCommand.js"></script>
+	<script src="js/commands/GameInitCommand.js"></script>
+	<script src="js/commands/InitPlatfromInfoCommand.js"></script>
+	<script src="js/commands/LoginSceneEnterCommand.js"></script>
+	<script src="js/commands/LoginSceneExitCommand.js"></script>
+	<script src="js/commands/MatchEnterCommand.js"></script>
+	<script src="js/commands/MatchResPreloadCommand.js"></script>
+	<script src="js/commands/NetworkGameLoginCommand.js"></script>
+	<script src="js/commands/PlatformAuthSceneCommand.js"></script>
+	<script src="js/commands/PreloadCommand.js"></script>
+	<script src="js/commands/StartupInitCommand.js"></script>
+	<script src="js/framework/manager/ByteTableManager.js"></script>
+	<script src="js/data/config/BuffConfigConfigData.js"></script>
+	<script src="js/data/config/BulletConfigConfigData.js"></script>
+	<script src="js/data/config/ConstConfigConfigData.js"></script>
+	<script src="js/data/config/FormulaConfigConfigData.js"></script>
+	<script src="js/data/config/GoldUpgradeConfigConfigData.js"></script>
+	<script src="js/data/config/LevelBrushConfigConfigData.js"></script>
+	<script src="js/data/config/LevelConfigConfigData.js"></script>
+	<script src="js/data/config/LevelTemplateConfigConfigData.js"></script>
+	<script src="js/data/config/LocalizationConfigData.js"></script>
+	<script src="js/data/config/LotteryRewardConfigConfigData.js"></script>
+	<script src="js/data/config/MainWeaponEvolutionConfigConfigData.js"></script>
+	<script src="js/data/config/MonsterConfigConfigData.js"></script>
+	<script src="js/data/config/OtherConfigData.js"></script>
+	<script src="js/data/config/PhoneVerifyErrorMessageConfigData.js"></script>
+	<script src="js/data/config/PlayerConfigConfigData.js"></script>
+	<script src="js/data/config/PropConfigConfigData.js"></script>
+	<script src="js/data/config/SkillConfigConfigData.js"></script>
+	<script src="js/data/config/SoundConfigConfigData.js"></script>
+	<script src="js/data/config/SpineConfigConfigData.js"></script>
+	<script src="js/data/config/UIInfoConfigData.js"></script>
+	<script src="js/data/config/WeaponConfigConfigData.js"></script>
+	<script src="js/interface/IGameDta.js"></script>
+	<script src="js/data/model/LevelInfo.js"></script>
+	<script src="js/data/model/MatchInfo.js"></script>
+	<script src="js/data/model/playerinfo/LoginPlayerInfo.js"></script>
+	<script src="js/data/struct/CommonStruct.js"></script>
+	<script src="js/uiscripts/UIParamStruct.js"></script>
+	<script src="js/data/struct/NotifcationStruct.js"></script>
+	<script src="js/game/components/2DComponent/BuffComponent.js"></script>
+	<script src="js/game/components/2DComponent/bullet/BulletMoveComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/EffectComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/HitComponentBase2D.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterAttributeComponent.js"></script>
+	<script src="js/game/components/2DComponent/player/BulletComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterBulletComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterEffectComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterHitComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterHpBarComponent.js"></script>
+	<script src="js/game/components/2DComponent/moveComponent/RandomMovementComponent.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterMoveComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterShakeComponent.js"></script>
+	<script src="js/game/components/2DComponent/monster/MonsterSkillComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/mosterBullet/MonsterBulletMoveComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/player/InputComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/player/PlayerAnimComponent.js"></script>
+	<script src="js/game/components/2DComponent/player/PlayerEffectComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/player/PlayerHitComponent.js"></script>
+	<script src="js/game/components/2DComponent/player/PlayerSkillComponent2D.js"></script>
+	<script src="js/game/components/2DComponent/player/PlayerSlotComponent.js"></script>
+	<script src="js/game/components/2DComponent/player/TailComponent.js"></script>
+	<script src="js/game/components/2DComponent/prop/PropMoveComponent.js"></script>
+	<script src="js/game/components/2DComponent/Show2DShapeComponent.js"></script>
+	<script src="js/game/components/2DComponent/viewComponent/ViewComponentBase2D.js"></script>
+	<script src="js/game/components/2DComponent/viewComponent/ImageViewComponent.js"></script>
+	<script src="js/game/components/2DComponent/viewComponent/SpineViewComponent.js"></script>
+	<script src="js/game/logic/buff/IBuffLogic.js"></script>
+	<script src="js/game/logic/buff/BulletThroughBuff.js"></script>
+	<script src="js/game/player/2d/PlayerBase2D.js"></script>
+	<script src="js/game/player/2d/Plane.js"></script>
+	<script src="js/utils/Pool/ScriptObjectPool.js"></script>
+	<script src="js/game/logic/buff/callAlliance/AlliancePlane.js"></script>
+	<script src="js/game/logic/buff/callAlliance/CallAllianceBuff.js"></script>
+	<script src="js/game/logic/buff/EnlargeBuff.js"></script>
+	<script src="js/game/logic/buff/FightBackBuff.js"></script>
+	<script src="js/game/logic/buff/FirePowerBuff.js"></script>
+	<script src="js/game/logic/buff/FireSpeedBuff.js"></script>
+	<script src="js/game/logic/buff/GoldBuff.js"></script>
+	<script src="js/game/logic/buff/LimitInputBuff.js"></script>
+	<script src="js/game/logic/buff/magnetFreezen/MagnetFreezenBuff.js"></script>
+	<script src="js/game/logic/buff/WeakenBuff.js"></script>
+	<script src="js/game/logic/playerskill/ISkillLogic.js"></script>
+	<script src="js/game/logic/monsterskill/attachskill/AttachSkill.js"></script>
+	<script src="js/game/logic/monsterskill/AttackSkill.js"></script>
+	<script src="js/game/logic/monsterskill/BringMoneySkill.js"></script>
+	<script src="js/game/logic/monsterskill/ExplosionSkill.js"></script>
+	<script src="js/game/logic/monsterskill/FollowSkill.js"></script>
+	<script src="js/game/logic/monsterskill/HealingSkill.js"></script>
+	<script src="js/game/logic/monsterskill/ScaleUpSkill.js"></script>
+	<script src="js/game/logic/monsterskill/SpawnSkill.js"></script>
+	<script src="js/game/logic/monsterskill/SplitSkill.js"></script>
+	<script src="js/game/logic/playerskill/childPlane/ChildPlane.js"></script>
+	<script src="js/game/logic/playerskill/childPlane/ChildPlaneWeapon.js"></script>
+	<script src="js/game/player/2d/Bullet.js"></script>
+	<script src="js/game/logic/playerskill/electricNetWeapon/ElectricNet.js"></script>
+	<script src="js/game/logic/playerskill/electricNetWeapon/ElectricNetMoveComponent2D.js"></script>
+	<script src="js/game/logic/playerskill/electricNetWeapon/ElectricNetViewComponent2D.js"></script>
+	<script src="js/game/logic/playerskill/electricNetWeapon/ElectricNetWeapon.js"></script>
+	<script src="js/game/logic/playerskill/SkillSpawnObject.js"></script>
+	<script src="js/game/logic/playerskill/Guard/Guard.js"></script>
+	<script src="js/game/logic/playerskill/Guard/GuardWeapon.js"></script>
+	<script src="js/game/logic/playerskill/Laser/Laser.js"></script>
+	<script src="js/game/logic/playerskill/Laser/LaserWeapon.js"></script>
+	<script src="js/game/logic/playerskill/MagnetDisturb/MagenetBounce.js"></script>
+	<script src="js/game/logic/playerskill/MagnetDisturb/MagnetDisturbWeapon.js"></script>
+	<script src="js/game/logic/playerskill/MissileWeapon/MissileBullet.js"></script>
+	<script src="js/game/logic/playerskill/MissileWeapon/MissileBulletEffectComponent2D.js"></script>
+	<script src="js/game/logic/playerskill/MissileWeapon/MissileBulletMoveComponent2D.js"></script>
+	<script src="js/game/logic/playerskill/MissileWeapon/MissileWeapon.js"></script>
+	<script src="js/game/mediator/BasePlayerMediator.js"></script>
+	<script src="js/game/mediator/LevelMediator.js"></script>
+	<script src="js/game/mediator/MainPlayerMediator/MainPlayerMediator.js"></script>
+	<script src="js/game/mediator/MonsterMediator.js"></script>
+	<script src="js/game/player/2d/MainPlayer.js"></script>
+	<script src="js/game/player/2d/Monster.js"></script>
+	<script src="js/game/player/2d/MonsterBullet.js"></script>
+	<script src="js/game/player/2d/Prop.js"></script>
+	<script src="js/game/player/Player.js"></script>
+	<script src="js/game/player/LoginPlayer.js"></script>
+	<script src="js/network/MessageSender/http/IHttpSender.js"></script>
+	<script src="js/network/MessageSender/http/HttpDummyMessageSender.js"></script>
+	<script src="js/network/MessageSender/http/HttpProtoMessageSender.js"></script>
+	<script src="js/network/MessageSender/socket/ISocketMsgSender.js"></script>
+	<script src="js/network/MessageSender/socket/EchoMessageSender.js"></script>
+	<script src="js/network/MessageSender/socket/SingleMessageSender.js"></script>
+	<script src="js/network/MessageSender/socket/SocketMessageSender.js"></script>
+	<script src="js/network/NetMessageHandler/http/CheckInviteListHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/CheckLotteryRewardHistroyHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/CheckPhoneVerifyHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/ChooseServerHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/CreateMoneySpawnHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/EquipSideWeaponHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/ExchangeWithDiamondHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GainMoneySpawnHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GainPointByMatchHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GainPointByTimeHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GetDailyFriendAward.js"></script>
+	<script src="js/network/NetMessageHandler/http/GetInviteRewardHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GetInviteVerifyRewardHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GetMessageVerifyCodeHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/GetOpenIdHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/InvitedByFriendHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/LotteryHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/MatchCompleteHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/MatchStartHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/RemoveMoneySpawnHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/UnlockSideWeaponHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/UpdateMoneySpawnHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/UpgradeSpawnLvlHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/UpgradeWeaponLvlHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/UserLoginHandler.js"></script>
+	<script src="js/network/NetMessageHandler/http/WeaponEvolutionHandler.js"></script>
+	<script src="js/network/NetMessageHandler/socket/HeartBeatPackageHandler.js"></script>
+	<script src="js/ui/layaUI.max.all.js"></script>
+	<script src="js/uiscripts/prefabscripts/BattleProp.js"></script>
+	<script src="js/uiscripts/prefabscripts/FloatTipItem_Lottery.js"></script>
+	<script src="js/uiscripts/prefabscripts/FloatTipItem_Upgrade.js"></script>
+	<script src="js/uiscripts/prefabscripts/InviteItem.js"></script>
+	<script src="js/uiscripts/prefabscripts/InviteVerifyItem.js"></script>
+	<script src="js/uiscripts/prefabscripts/LotteryHistItem.js"></script>
+	<script src="js/uiscripts/prefabscripts/LotteryItem.js"></script>
+	<script src="js/uiscripts/prefabscripts/MoneyAnimItem.js"></script>
+	<script src="js/uiscripts/prefabscripts/SpawnItem.js"></script>
+	<script src="js/uiscripts/prefabscripts/UpgradeItem.js"></script>
+	<script src="js/uiscripts/uicontrollers/BackgroundUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/BattleUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/CommonPanelUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/ExchangeUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/HomePageUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/InviteFriendUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/InviteVerifyFriendUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/LeaderboardUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/LevelUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/LoadingUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/LotteryResultUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/LotteryRewardHistUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/MoneyInfoUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/MoreSpawnUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/ProgressUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/RebornUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/ResultUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/SettingUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/UpgradeUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/VerifyUICtrl.js"></script>
+	<script src="js/uiscripts/uicontrollers/WaitingUICtrl.js"></script>
+	<script src="js/uiscripts/UIMediator.js"></script>
+	<!--jsfile--endTag-->
+
+	<!--启动类添加到这里-->
+	<!--jsfile--Main-->
+	<script src="js/LayaSample.js"></script>
+	<!--jsfile--Main-->
+</body>
+
+</html>

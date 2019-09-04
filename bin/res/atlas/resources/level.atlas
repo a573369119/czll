@@ -1,0 +1,1 @@
+{"frames":{"img_level_now.png":{"frame":{"h":84,"idx":0,"w":224,"x":0,"y":0},"sourceSize":{"h":84,"w":224},"spriteSourceSize":{"x":0,"y":0}},"img_level_other.png":{"frame":{"h":84,"idx":0,"w":224,"x":0,"y":85},"sourceSize":{"h":84,"w":224},"spriteSourceSize":{"x":0,"y":0}}},"meta":{"image":"level.png","prefix":"resources/level/"}}
